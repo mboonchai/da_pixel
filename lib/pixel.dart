@@ -21,7 +21,7 @@ Future<PixelLoadResult> loadAlphaNum(
   if(Config.rotateScreen) {
     var tmp = w;
     w = h;
-    h = w;
+    h = tmp;
   }
 
   final pictureRecorder = PictureRecorder();
