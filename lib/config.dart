@@ -10,5 +10,6 @@ class Config {
     static double gapSize = 0.2;
     static bool rotateScreen = false;  //rotate 90 degree clock wise
 
+    static int cacheResolution = 1; //1 = 5(dot) + 1(gap) size , 0 = pixelSize + pixelGap
 
 }

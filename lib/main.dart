@@ -45,10 +45,11 @@ class SpaceShooterGame extends FlameGame with PanDetector,DoubleTapDetector {
     await super.onLoad();
 
     screen = Screen(size);
-    camera.viewport = FixedResolutionViewport(screen.getViewPort()); 
+    camera.viewport = FixedResolutionViewport(screen.getViewPort());
+     
 
-
-    char = Char(characterCode: "1", color: Colors.white, position: screen.getPosition(0, 0));
+    
+    char = Char(characterCode: "1", color: Colors.white, position: screen.getPosition(0, 0) );
     char2 = Char(characterCode: "2", color: Colors.white, position: screen.getPosition(0, 7));
 
     background = Background(position: Vector2(0,0));
@@ -88,5 +89,6 @@ class SpaceShooterGame extends FlameGame with PanDetector,DoubleTapDetector {
 }
 
 void main() {
+  
   runApp(GameWidget(game: SpaceShooterGame()));
 }

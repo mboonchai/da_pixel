@@ -27,8 +27,11 @@ class Background extends SpriteComponent with HasGameRef<SpaceShooterGame> {
           pixels.data!, pixels.width, pixels.height);
       sprite = Sprite(img);
 
-      width = pixels.width.toDouble();
-      height = pixels.height.toDouble();
+      var size = gameRef.screen.calcSpriteSize(pixels.width.toDouble(),pixels.height.toDouble());
+
+      width =  size.x;
+      height =  size.y;
+
     } else {
       width = 0;
       height = 0;

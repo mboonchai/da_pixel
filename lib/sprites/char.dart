@@ -1,12 +1,12 @@
-import 'package:da_pixel/config.dart';
 import 'package:da_pixel/main.dart';
 import 'package:da_pixel/pixel.dart';
 import 'package:da_pixel/pixels_loader/base.dart';
 import 'package:da_pixel/sprites_cache/cache.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
+import 'base.dart';
 
-class Char extends SpriteComponent with HasGameRef<SpaceShooterGame>  {
+class Char extends DaPixelSpriteComponent with HasGameRef<SpaceShooterGame>  {
   final String characterCode;
   final Color color;
 
@@ -27,7 +27,7 @@ class Char extends SpriteComponent with HasGameRef<SpaceShooterGame>  {
     if (cache.has(key)) {
       pixels = cache.get(key);
     } else {
-      var result = await loadAlphaNum(characterCode,gameRef.screen.pixelSize,gameRef.screen.pixelGap,  color: color);
+      var result = await loadAlphaNum(gameRef.screen, characterCode,  color: color);
       if (result.success && result.data != null) {
         pixels = result.data!;
 
@@ -40,18 +40,18 @@ class Char extends SpriteComponent with HasGameRef<SpaceShooterGame>  {
       var img = await ImageExtension.fromPixels(
           pixels.data!, pixels.width, pixels.height);
       sprite = Sprite(img);
+      
+      var size = gameRef.screen.calcSpriteSize(pixels.width.toDouble(),pixels.height.toDouble());
 
-      width = pixels.width.toDouble();
-      height = pixels.height.toDouble();
-
-      if(Config.rotateScreen) {
-        position.x = position.x -width;
-      }
+      width =  size.x;
+      height =  size.y;
 
     } else {
       width = 0;
       height = 0;
     }
+
+    
   }
 
   void move(Vector2 delta) {

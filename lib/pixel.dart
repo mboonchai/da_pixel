@@ -2,27 +2,29 @@ import 'dart:ui';
 
 import 'package:da_pixel/screen/screen.dart';
 import 'package:flutter/material.dart';
-import 'config.dart';
 import 'pixels/alphanum_s.dart';
 import 'pixels_loader/base.dart';
 
-Future<PixelLoadResult> loadAlphaNum(
-    String code, double pixelSize, double pixelGap,
-    {Color color = Colors.white}) async {
+Future<PixelLoadResult> loadAlphaNum(Screen screen,
+    String code, {Color color = Colors.white}) async {
   var pixels = alphanum[code];
 
   if (pixels == null) {
     return PixelLoadResult();
   }
 
-  var h = (pixels.length * (pixelSize + pixelGap)).toInt();
-  var w = (pixels[0].length * (pixelSize + pixelGap)).toInt();
+  var pxSize = screen.getSpritePixelSize();
+  var pxGap = screen.getSpritePixelGap();
 
-  if(Config.rotateScreen) {
-    var tmp = w;
-    w = h;
-    h = tmp;
-  }
+
+  var h = (pixels.length * (pxSize+pxGap)).toInt();
+  var w = (pixels[0].length * (pxSize+pxGap)).toInt();
+
+  // if(Config.rotateScreen) {
+  //   var tmp = w;
+  //   w = h;
+  //   h = tmp;
+  // }
 
   final pictureRecorder = PictureRecorder();
 
@@ -32,20 +34,20 @@ Future<PixelLoadResult> loadAlphaNum(
   var paint = Paint()..color = color;
 
   for (var i = 0; i < pixels.length; ++i) {
-    var posy = i * (pixelSize + pixelGap);
+    var posy = i * (pxSize+pxGap);
     for (var j = 0; j < pixels[i].length; ++j) {
-      var posx = j * (pixelSize + pixelGap);
+      var posx = j * (pxSize+pxGap);
 
       if (pixels[i][j] <= 0) {
         continue;
       }
 
-      if(Config.rotateScreen) {
-        canvas.drawRect(Rect.fromLTWH(pixels.length* (pixelSize + pixelGap) - posy,posx, pixelSize, pixelSize), paint);
-      }
-      else {
-        canvas.drawRect(Rect.fromLTWH(posx, posy, pixelSize, pixelSize), paint);
-      }
+      // if(Config.rotateScreen) {
+      //   canvas.drawRect(Rect.fromLTWH((pixels.length-1)* (pxSize+pxGap) - posy,posx, pxSize, pxSize), paint);
+      // }
+      // else {
+        canvas.drawRect(Rect.fromLTWH(posx, posy, pxSize, pxSize), paint);
+      //}
       
     }
   }
@@ -79,12 +81,17 @@ Future<PixelLoadResult> loadBackground(Screen screen,
 
   var paint = Paint()..color = color;
 
-  for (var i = 0; i < screen.height; ++i) {
-    var posy =  i * (screen.pixelSize + screen.pixelGap);
-    for (var j = 0; j < screen.width; ++j) {
-      var posx =  j * (screen.pixelSize + screen.pixelGap);
+  var pxSize = screen.getSpritePixelSize();
+  var pxGap = screen.getSpritePixelGap();
 
-      canvas.drawRect(Rect.fromLTWH(posx, posy, screen.pixelSize, screen.pixelSize), paint);
+
+
+  for (var i = 0; i < screen.height; ++i) {
+    var posy =  i * (pxSize+pxGap);
+    for (var j = 0; j < screen.width; ++j) {
+      var posx =  j * (pxSize+pxGap);
+
+      canvas.drawRect(Rect.fromLTWH(posx, posy, pxSize,pxSize), paint);
     }
   }   
 
