@@ -1,15 +1,16 @@
-import 'package:da_pixel/main.dart';
+
 import 'package:da_pixel/pixel.dart';
 import 'package:da_pixel/pixels_loader/base.dart';
+import 'package:da_pixel/sprites/base.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 
-class Background extends SpriteComponent with HasGameRef<SpaceShooterGame> {
+class Background extends DaPixelSpriteComponent {
   final Color color;
 
   Background({
     this.color = const Color(0xFF111111),
-    super.position,
+    required super.screenPosition,
   });
 
   @override
@@ -27,11 +28,11 @@ class Background extends SpriteComponent with HasGameRef<SpaceShooterGame> {
           pixels.data!, pixels.width, pixels.height);
       sprite = Sprite(img);
 
-      var size = gameRef.screen.calcSpriteSize(pixels.width.toDouble(),pixels.height.toDouble());
+      var size = gameRef.screen
+          .calcSpriteSize(pixels.width.toDouble(), pixels.height.toDouble());
 
-      width =  size.x;
-      height =  size.y;
-
+      width = size.x;
+      height = size.y;
     } else {
       width = 0;
       height = 0;

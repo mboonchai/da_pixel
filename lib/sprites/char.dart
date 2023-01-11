@@ -1,4 +1,3 @@
-import 'package:da_pixel/main.dart';
 import 'package:da_pixel/pixel.dart';
 import 'package:da_pixel/pixels_loader/base.dart';
 import 'package:da_pixel/sprites_cache/cache.dart';
@@ -6,14 +5,14 @@ import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'base.dart';
 
-class Char extends DaPixelSpriteComponent with HasGameRef<SpaceShooterGame>  {
+class Char extends DaPixelSpriteComponent {
   final String characterCode;
   final Color color;
 
   Char({
     required this.characterCode,
     required this.color,
-    super.position,
+    required super.screenPosition,
   });
 
   @override
@@ -21,7 +20,7 @@ class Char extends DaPixelSpriteComponent with HasGameRef<SpaceShooterGame>  {
     await super.onLoad();
 
     var cache = getCache();
-    var key = "${characterCode}_$color";
+    var key = "alphanum_${characterCode}_$color";
     PixelData? pixels;
 
     if (cache.has(key)) {

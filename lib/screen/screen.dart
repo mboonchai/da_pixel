@@ -94,7 +94,7 @@ class Screen {
     return Vector2(viewPortW, viewPortH);
   }
 
-  //x,y is logical (top,left)
+  //x,y is logical/screen (top,left)
   Vector2 getPosition(int x, int y) {
     return Vector2(
       Config.rotateScreen
@@ -103,6 +103,17 @@ class Screen {
       Config.rotateScreen
           ? ((x * (pixelSize + pixelGap)))
           : (y * (pixelSize + pixelGap)),
+    );
+  }
+
+  Vector2 getPositionFromScreen(Vector2 pos) {
+    return Vector2(
+      Config.rotateScreen
+          ? (viewPortW - (pos.y * (pixelSize + pixelGap)))
+          : (pos.x * (pixelSize + pixelGap)),
+      Config.rotateScreen
+          ? ((pos.x * (pixelSize + pixelGap)))
+          : (pos.y * (pixelSize + pixelGap)),
     );
   }
 
