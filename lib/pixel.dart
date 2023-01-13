@@ -95,6 +95,9 @@ Future<PixelLoadResult> loadBackground(Screen screen,
     }
   }   
 
+  // print("ViewPort ${screen.viewPortW}, ${screen.viewPortH}");
+  // print("Screen ${screen.width}, ${screen.height}");
+
   
   var picture = pictureRecorder.endRecording();
   var image = await picture.toImage(screen.viewPortW.floor(),screen.viewPortH.floor());

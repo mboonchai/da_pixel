@@ -106,7 +106,16 @@ class Screen {
     );
   }
 
+  //use with sprite only
   Vector2 getPositionFromScreen(Vector2 pos) {
+    return Vector2(
+      (pos.x * (pixelSize + pixelGap)),
+      (pos.y * (pixelSize + pixelGap)),
+    );
+  }
+
+  //use with positioncomponent only
+  Vector2 getPositionFromScreenWithRotate(Vector2 pos) {
     return Vector2(
       Config.rotateScreen
           ? (viewPortW - (pos.y * (pixelSize + pixelGap)))
@@ -117,18 +126,31 @@ class Screen {
     );
   }
 
-  Vector2 calcSpriteSize(double width,double height) {
+  //sprite size may be real size or reduced size
+  Vector2 calcSpriteSize(double width, double height) {
     return Vector2(
-      Config.cacheResolution<=0?(width):(width * (pixelSize+pixelGap)/6),
-      Config.cacheResolution<=0?(height):(height * (pixelSize+pixelGap)/6));
+        Config.cacheResolution <= 0
+            ? (width)
+            : (width * (pixelSize + pixelGap) / 6),
+        Config.cacheResolution <= 0
+            ? (height)
+            : (height * (pixelSize + pixelGap) / 6));
+  }
+
+  Vector2 calcSizeFromPixel(double pixelWidth, double pixelHeight) {
+    return Vector2(width * (pixelSize + pixelGap) / 6,
+        height * (pixelSize + pixelGap) / 6);
   }
 
   double getSpritePixelSize() {
-    return Config.cacheResolution<=0?pixelSize:(Config.cacheResolution*5.0);
+    return Config.cacheResolution <= 0
+        ? pixelSize
+        : (Config.cacheResolution * 5.0);
   }
 
- double getSpritePixelGap() {
-    return Config.cacheResolution<=0?pixelGap:(Config.cacheResolution*1.0);
+  double getSpritePixelGap() {
+    return Config.cacheResolution <= 0
+        ? pixelGap
+        : (Config.cacheResolution * 1.0);
   }
 }
-

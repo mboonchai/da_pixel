@@ -1,16 +1,18 @@
 
+import 'package:da_pixel/main.dart';
 import 'package:da_pixel/pixel.dart';
 import 'package:da_pixel/pixels_loader/base.dart';
-import 'package:da_pixel/sprites/base.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 
-class Background extends DaPixelSpriteComponent {
+
+//Screen is not dapixelsprite!
+class Background extends SpriteComponent with HasGameRef<DaPixel> {
   final Color color;
 
   Background({
     this.color = const Color(0xFF111111),
-    required super.screenPosition,
+    required super.position,
   });
 
   @override
@@ -33,6 +35,8 @@ class Background extends DaPixelSpriteComponent {
 
       width = size.x;
       height = size.y;
+
+      //print("size $width , $height");
     } else {
       width = 0;
       height = 0;

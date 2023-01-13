@@ -3,7 +3,7 @@ import 'package:da_pixel/pixels_loader/base.dart';
 import 'package:da_pixel/sprites_cache/cache.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
-import 'base.dart';
+import 'sprite.dart';
 
 class Char extends DaPixelSpriteComponent {
   final String characterCode;
@@ -11,7 +11,7 @@ class Char extends DaPixelSpriteComponent {
 
   Char({
     required this.characterCode,
-    required this.color,
+    this.color = const Color(0xffffffff),
     required super.screenPosition,
   });
 
