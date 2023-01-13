@@ -1,7 +1,6 @@
 import 'package:da_pixel/app/clock.dart';
 import 'package:da_pixel/screen/screen.dart';
 import 'package:da_pixel/sprites/background.dart';
-import 'package:da_pixel/sprites/char.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
@@ -9,6 +8,7 @@ import 'package:flame/game.dart';
 import 'app/app.dart';
 import 'pixel.dart';
 import 'sprites_cache/cache.dart';
+
 
 class DaPixel extends FlameGame with PanDetector, DoubleTapDetector {
   late Background background;
@@ -121,4 +121,10 @@ Future<void> precache(Screen screen) async {
 
 void main() {
   runApp(GameWidget(game: DaPixel()));
+
+  //   windowManager.waitUntilReadyToShow().then((_) async{
+  //           await windowManager.setAsFrameless();
+
+  // });
+
 }

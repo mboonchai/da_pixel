@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.5
   flame: ^1.5.0
   mutex: ^3.0.1
+  window_manager: ^0.3.0
 
 dev_dependencies:
   flutter_test:
