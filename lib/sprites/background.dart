@@ -1,17 +1,19 @@
 
-import 'package:da_pixel/main.dart';
 import 'package:da_pixel/pixel.dart';
 import 'package:da_pixel/pixels_loader/base.dart';
+import 'package:da_pixel/screen/screen.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 
 
 //Screen is not dapixelsprite!
-class Background extends SpriteComponent with HasGameRef<DaPixel> {
+class Background extends SpriteComponent {
   final Color color;
+  final Screen screen;
 
   Background({
     this.color = const Color(0xFF111111),
+    required this.screen,
     required super.position,
   });
 
@@ -20,7 +22,7 @@ class Background extends SpriteComponent with HasGameRef<DaPixel> {
     await super.onLoad();
 
     PixelData? pixels;
-    var result = await loadBackground(gameRef.screen, color: color);
+    var result = await loadBackground(screen, color: color);
     if (result.success && result.data != null) {
       pixels = result.data!;
     }
@@ -30,7 +32,7 @@ class Background extends SpriteComponent with HasGameRef<DaPixel> {
           pixels.data!, pixels.width, pixels.height);
       sprite = Sprite(img);
 
-      var size = gameRef.screen
+      var size = screen
           .calcSpriteSize(pixels.width.toDouble(), pixels.height.toDouble());
 
       width = size.x;

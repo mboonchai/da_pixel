@@ -1,19 +1,15 @@
+import 'package:da_pixel/screen/screen.dart';
 import 'package:flame/extensions.dart';
 
 import 'app.dart';
+import 'bigclock_internal.dart';
 import 'clock_internal.dart';
 
-class Clock extends DaPixelApp {
-  final bool showSeconds;
-  final bool blinkSeparator;
-  final Color color;
+class BigSimpleClock extends DaPixelApp {
+  late final BigClockInternal _clock;
 
-  late final ClockInternal _clock;
-
-  Clock({
-    this.showSeconds = true,
-    this.blinkSeparator = false,
-    this.color = const Color(0xffffffff),
+  BigSimpleClock({
+    required super.screen,
     required super.screenPosition,
   });
 
@@ -21,12 +17,12 @@ class Clock extends DaPixelApp {
   Future<void> onLoad() async {
     await super.onLoad();
 
-    _clock = ClockInternal(
-        screenPosition: Vector2(0, 0),
-        showSeconds: showSeconds,
-        blinkSeparator: blinkSeparator,
-        color: color);
-
+    _clock = BigClockInternal(
+      screen: screen,
+        screenPosition: Vector2(14, 0),
+        showSeconds: false,
+        blinkSeparator: true,
+        color: const Color(0xffffffff));
     await add(_clock);
   }
 
@@ -36,11 +32,75 @@ class Clock extends DaPixelApp {
   }
 }
 
-DaPixelApp createClockShowSeconds() {
-  return Clock(screenPosition: Vector2(6, 1));
+
+class ClockWithSeconds extends DaPixelApp {
+  late final ClockInternal _clock;
+
+  ClockWithSeconds({
+    required super.screen,
+    required super.screenPosition,
+  });
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+
+    _clock = ClockInternal(
+      screen: screen,
+        screenPosition: Vector2(6,1),
+        showSeconds: true,
+        blinkSeparator: false,
+        color: const Color(0xffffffff));
+    await add(_clock);
+  }
+
+  @override
+  Future<void> updateApp(int tick) async {
+    await _clock.updateApp(tick);
+  }
 }
 
-DaPixelApp createClock() {
-  return Clock(
-      screenPosition: Vector2(11, 1), showSeconds: false, blinkSeparator: true);
+class SimpleClock extends DaPixelApp {
+  late final ClockInternal _clock;
+
+  SimpleClock({
+    required super.screen,
+    required super.screenPosition,
+  });
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+
+    _clock = ClockInternal(
+      screen: screen,
+        screenPosition: Vector2(11, 1),
+        showSeconds: false,
+        blinkSeparator: true,
+        color: const Color(0xffffffff));
+    await add(_clock);
+  }
+
+  @override
+  Future<void> updateApp(int tick) async {
+    await _clock.updateApp(tick);
+  }
+} 
+
+
+DaPixelApp createClockShowSeconds(Vector2 screenSize) {
+  return ClockWithSeconds(screenPosition: Vector2(0,0),screen: createLowResScreen(screenSize));
+}
+
+DaPixelApp createClock(Vector2 screenSize) {
+  return SimpleClock(
+      screenPosition: Vector2(0,0),
+      screen: createLowResScreen(screenSize));
+}
+
+
+DaPixelApp createBigClock(Vector2 screenSize) {
+  return BigSimpleClock(
+      screenPosition: Vector2(0,0),
+      screen: createHighResScreen(screenSize));
 }

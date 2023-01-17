@@ -1,3 +1,4 @@
+import 'package:da_pixel/pixel.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 
@@ -10,10 +11,13 @@ enum BlinkState {
 
 class ClockSeparator extends DaPixelSpriteGroupComponent<BlinkState> {
   final Color color;
+  final CharSize textSize;
 
   ClockSeparator(
       {this.color = const Color(0xffffffff),
+       this.textSize = CharSize.small,
       required super.screenPosition,
+      required super.screen,
       super.angle});
 
   @override
@@ -21,11 +25,11 @@ class ClockSeparator extends DaPixelSpriteGroupComponent<BlinkState> {
     await super.onLoad();
 
     var spriteData = [
-      await loadAlphaNumFromCache(":", color)(),
-      await loadAlphaNumFromCache("\u009A", color)(),
+      await loadAlphaNumFromCache(":", color,size: textSize)(),
+      await loadAlphaNumFromCache("\u009A", color,size: textSize)(),
     ];
 
-    var size = gameRef.screen.calcSpriteSize(
+    var size = screen.calcSpriteSize(
         spriteData[0].data!.width.toDouble(),
         spriteData[0].data!.height.toDouble());
     width = size.x;

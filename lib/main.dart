@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
 
 import 'app/app.dart';
+import 'config.dart';
 import 'pixel.dart';
 import 'sprites_cache/cache.dart';
 
@@ -16,7 +17,7 @@ class DaPixel extends FlameGame with PanDetector, DoubleTapDetector {
   // late Char char2;
 
   // Char? char3;
-  late Screen screen;
+  late Screen _screen;
 
   late List<DaPixelApp> apps;
   int curApp = -1;
@@ -24,23 +25,29 @@ class DaPixel extends FlameGame with PanDetector, DoubleTapDetector {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    screen = Screen(size);
-    camera.viewport = FixedResolutionViewport(screen.getViewPort());
 
-    await precache(screen);
+    var viewportSize = Config.useLogicalSize?Config.logicalSize:size;
+
+    _screen = Screen(viewportSize,PixelResolution.low);
+
+
+    await precache(_screen);
 
     // char =Numbers(screenPosition: Vector2(0,0));
     // char2 = Char(characterCode: "2", color: Colors.white, screenPosition: Vector2(0, 7));
 
     apps = [
-      createClockShowSeconds(),
-      createClock(),
+      createClockShowSeconds(viewportSize),
+      createClock(viewportSize),
+      createBigClock(viewportSize),
     ];
 
-    background = Background(position: Vector2(0, 0));
+    camera.viewport = FixedResolutionViewport(_screen.getViewPort());
 
-    //player = Player();
-    add(background);
+     background = Background(position: Vector2(0, 0), screen: _screen);
+
+    // //player = Player();
+     //add(background);
 
     if (apps.isNotEmpty) {
       add(apps[0]);
@@ -94,28 +101,29 @@ class DaPixel extends FlameGame with PanDetector, DoubleTapDetector {
 
 Future<void> precache(Screen screen) async {
   var textcolor = Colors.white;
+  var textsize =  CharSize.small;
 
   await preCacheSprites({
-    "alphanum_0_$textcolor": () async =>
-        await loadAlphaNum(screen, "0", color: textcolor),
-    "alphanum_1_$textcolor": () async =>
-        await loadAlphaNum(screen, "1", color: textcolor),
-    "alphanum_2_$textcolor": () async =>
-        await loadAlphaNum(screen, "2", color: textcolor),
-    "alphanum_3_$textcolor": () async =>
-        await loadAlphaNum(screen, "3", color: textcolor),
-    "alphanum_4_$textcolor": () async =>
-        await loadAlphaNum(screen, "4", color: textcolor),
-    "alphanum_5_$textcolor": () async =>
-        await loadAlphaNum(screen, "5", color: textcolor),
-    "alphanum_6_$textcolor": () async =>
-        await loadAlphaNum(screen, "6", color: textcolor),
-    "alphanum_7_$textcolor": () async =>
-        await loadAlphaNum(screen, "7", color: textcolor),
-    "alphanum_8_$textcolor": () async =>
-        await loadAlphaNum(screen, "8", color: textcolor),
-    "alphanum_9_$textcolor": () async =>
-        await loadAlphaNum(screen, "9", color: textcolor),
+    "alphanum_0_${textcolor}_$textsize": () async =>
+        await loadAlphaNum(screen, "0", color: textcolor,size: textsize),
+    "alphanum_1_${textcolor}_$textsize": () async =>
+        await loadAlphaNum(screen, "1", color: textcolor,size: textsize),
+    "alphanum_2_${textcolor}_$textsize": () async =>
+        await loadAlphaNum(screen, "2", color: textcolor,size: textsize),
+    "alphanum_3_${textcolor}_$textsize": () async =>
+        await loadAlphaNum(screen, "3", color: textcolor,size: textsize),
+    "alphanum_4_${textcolor}_$textsize": () async =>
+        await loadAlphaNum(screen, "4", color: textcolor,size: textsize),
+    "alphanum_5_${textcolor}_$textsize": () async =>
+        await loadAlphaNum(screen, "5", color: textcolor,size: textsize),
+    "alphanum_6_${textcolor}_$textsize": () async =>
+        await loadAlphaNum(screen, "6", color: textcolor,size: textsize),
+    "alphanum_7_${textcolor}_$textsize": () async =>
+        await loadAlphaNum(screen, "7", color: textcolor,size: textsize),
+    "alphanum_8_${textcolor}_$textsize": () async =>
+        await loadAlphaNum(screen, "8", color: textcolor,size: textsize),
+    "alphanum_9_${textcolor}_$textsize": () async =>
+        await loadAlphaNum(screen, "9", color: textcolor,size: textsize),
   });
 }
 

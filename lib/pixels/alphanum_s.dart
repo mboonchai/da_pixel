@@ -1,4 +1,7 @@
 
+//height 7 px (include spaces for float top and bottom) ,
+//char base height 5 pixel, cap only
+
 final Map<String,List<List<int>>> alphanum = {
     " " : [ [0,0,0,0],
             [0,0,0,0],

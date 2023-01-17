@@ -1,3 +1,4 @@
+import 'package:da_pixel/pixel.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 
@@ -19,8 +20,12 @@ enum NumberState {
 
 class Numbers extends DaPixelSpriteGroupComponent<NumberState> {
   final Color color;
+  final CharSize textSize;
 
-  Numbers({this.color = const Color(0xffffffff), required super.screenPosition,
+  Numbers({this.color = const Color(0xffffffff), 
+    this.textSize = CharSize.small,
+    required super.screen,
+    required super.screenPosition,
     super.angle });
 
   @override
@@ -28,19 +33,19 @@ class Numbers extends DaPixelSpriteGroupComponent<NumberState> {
      await super.onLoad();
    
     var spriteData = [
-      await loadAlphaNumFromCache("0",color)(),
-      await loadAlphaNumFromCache("1",color)(),
-      await loadAlphaNumFromCache("2",color)(),
-      await loadAlphaNumFromCache("3",color)(),
-      await loadAlphaNumFromCache("4",color)(),
-      await loadAlphaNumFromCache("5",color)(),
-      await loadAlphaNumFromCache("6",color)(),
-      await loadAlphaNumFromCache("7",color)(),
-      await loadAlphaNumFromCache("8",color)(),
-      await loadAlphaNumFromCache("9",color)(),
+      await loadAlphaNumFromCache("0",color,size:textSize)(),
+      await loadAlphaNumFromCache("1",color,size:textSize)(),
+      await loadAlphaNumFromCache("2",color,size:textSize)(),
+      await loadAlphaNumFromCache("3",color,size:textSize)(),
+      await loadAlphaNumFromCache("4",color,size:textSize)(),
+      await loadAlphaNumFromCache("5",color,size:textSize)(),
+      await loadAlphaNumFromCache("6",color,size:textSize)(),
+      await loadAlphaNumFromCache("7",color,size:textSize)(),
+      await loadAlphaNumFromCache("8",color,size:textSize)(),
+      await loadAlphaNumFromCache("9",color,size:textSize)(),
     ];
 
-    var size = gameRef.screen.calcSpriteSize(spriteData[0].data!.width.toDouble(),spriteData[0].data!.height.toDouble());
+    var size = screen.calcSpriteSize(spriteData[0].data!.width.toDouble(),spriteData[0].data!.height.toDouble());
     width =  size.x;
     height =  size.y;
 
