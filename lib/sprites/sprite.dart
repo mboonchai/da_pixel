@@ -50,4 +50,11 @@ abstract class DaPixelSpriteGroupComponent<T> extends SpriteGroupComponent<T> wi
     return () async => loadAndCache("alphanum_${char}_${color}_$size",() async => await loadAlphaNum(screen, char,  color: color,size: size) );
   }
 
+  
+  Future<PixelLoadResult> Function() loadWordFromCache(String word,Color color,{CharSize size = CharSize.small}) {
+
+    return () async => loadAndCache("word_${word}_${color}_$size",() async => await loadWords(screen, word,  color: color,size: size) );
+  }
+
+
 }

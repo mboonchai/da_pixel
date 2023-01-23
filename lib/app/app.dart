@@ -55,3 +55,25 @@ abstract class DaPixelApp extends PositionComponent with PixelPositionSupport  {
 
   Future<void> updateApp(int tick);
 }
+
+
+abstract class Updatable {
+  Future<void> updateApp(int tick);
+}
+
+abstract class DaPixelWidget extends PositionComponent with PixelPositionSupport implements Updatable{
+  final Vector2 screenPosition;
+  final Screen screen;
+
+  DaPixelWidget({required this.screenPosition, required this.screen});
+  
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+
+    position = calcPositionFromScreen(screen, screenPosition);
+
+
+  }
+}
+

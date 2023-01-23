@@ -41,8 +41,8 @@ class Screen {
       instance.offsetPixelLeft = (w - useW) / 2;
       instance.offsetPixelTop = (h - useH) / 2;
 
-      instance.pixelSize = (w / numPixelX).floorToDouble() / 1.2;
-      instance.pixelGap = instance.pixelSize * 0.2;
+      instance.pixelSize = (w / numPixelX).floorToDouble() / (1+Config.gapSize);
+      instance.pixelGap = instance.pixelSize * Config.gapSize;
 
 
       instance.viewPortW =
@@ -58,8 +58,8 @@ class Screen {
       instance.offsetPixelLeft = (w - useW) / 2;
       instance.offsetPixelTop = (h - useH) / 2;
 
-      instance.pixelSize = (h / numPixelY).floorToDouble() / 1.2;
-      instance.pixelGap = instance.pixelSize * 0.2;
+      instance.pixelSize = (h / numPixelY).floorToDouble() /  (1+Config.gapSize);
+      instance.pixelGap = instance.pixelSize * Config.gapSize;
 
       instance.viewPortW =
           (h / numPixelY).floorToDouble() * numPixelX -
@@ -133,18 +133,23 @@ class Screen {
 
   //sprite size may be real size or reduced size
   Vector2 calcSpriteSize(double width, double height) {
+
+    var netweight = (1 + Config.gapSize)*5;
+
     return Vector2(
         Config.cacheResolution <= 0
             ? (width)
-            : (width * (pixelSize + pixelGap) / 6),
+            : (width * (pixelSize + pixelGap) / netweight),
         Config.cacheResolution <= 0
             ? (height)
-            : (height * (pixelSize + pixelGap) / 6));
+            : (height * (pixelSize + pixelGap) / netweight));
   }
 
   Vector2 calcSizeFromPixel(double pixelWidth, double pixelHeight) {
-    return Vector2(width * (pixelSize + pixelGap) / 6,
-        height * (pixelSize + pixelGap) / 6);
+        var netweight = (1 + Config.gapSize)*5;
+
+    return Vector2(width * (pixelSize + pixelGap) / netweight,
+        height * (pixelSize + pixelGap) / netweight);
   }
 
   double getSpritePixelSize() {
@@ -156,7 +161,7 @@ class Screen {
   double getSpritePixelGap() {
     return Config.cacheResolution <= 0
         ? pixelGap
-        : (Config.cacheResolution * 1.0);
+        : (Config.cacheResolution * 5.0 * Config.gapSize);
   }
 }
 

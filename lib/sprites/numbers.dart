@@ -16,6 +16,7 @@ enum NumberState {
   number_7,
   number_8,
   number_9,
+  number_notshow,
 }
 
 class Numbers extends DaPixelSpriteGroupComponent<NumberState> {
@@ -43,6 +44,7 @@ class Numbers extends DaPixelSpriteGroupComponent<NumberState> {
       await loadAlphaNumFromCache("7",color,size:textSize)(),
       await loadAlphaNumFromCache("8",color,size:textSize)(),
       await loadAlphaNumFromCache("9",color,size:textSize)(),
+      await loadAlphaNumFromCache(" ",color,size:textSize)(),
     ];
 
     var size = screen.calcSpriteSize(spriteData[0].data!.width.toDouble(),spriteData[0].data!.height.toDouble());
@@ -62,6 +64,7 @@ class Numbers extends DaPixelSpriteGroupComponent<NumberState> {
       NumberState.number_7: Sprite(await fromPixelData(spriteData[7].data!)),
       NumberState.number_8: Sprite(await fromPixelData(spriteData[8].data!)),
       NumberState.number_9: Sprite(await fromPixelData(spriteData[9].data!)),
+      NumberState.number_notshow: Sprite(await fromPixelData(spriteData[10].data!)),
 
     };
 

@@ -1,4 +1,5 @@
-import 'package:da_pixel/app/clock.dart';
+import 'package:da_pixel/app/calendar/calendar.dart';
+import 'package:da_pixel/app/clock/clock.dart';
 import 'package:da_pixel/screen/screen.dart';
 import 'package:da_pixel/sprites/background.dart';
 import 'package:flame/input.dart';
@@ -40,6 +41,7 @@ class DaPixel extends FlameGame with PanDetector, DoubleTapDetector {
       createClockShowSeconds(viewportSize),
       createClock(viewportSize),
       createBigClock(viewportSize),
+      createSimpleCalendar(viewportSize),
     ];
 
     camera.viewport = FixedResolutionViewport(_screen.getViewPort());
