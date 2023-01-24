@@ -33,11 +33,11 @@ class ClockInternal extends DaPixelWidget {
   Future<void> onLoad() async {
     await super.onLoad();
 
-    hour1 = Numbers(screenPosition: Vector2(0, 0), screen: screen);
-    hour2 = Numbers(screenPosition: Vector2(4, 0), screen: screen);
-    sep1 = ClockSeparator(screenPosition: Vector2(8, 0), screen: screen);
-    min1 = Numbers(screenPosition: Vector2(10, 0), screen: screen);
-    min2 = Numbers(screenPosition: Vector2(14, 0), screen: screen);
+    hour1 = Numbers(screenPosition: Vector2(0, 0), screen: screen,color: color);
+    hour2 = Numbers(screenPosition: Vector2(4, 0), screen: screen,color: color);
+    sep1 = ClockSeparator(screenPosition: Vector2(8, 0), screen: screen,color: color);
+    min1 = Numbers(screenPosition: Vector2(10, 0), screen: screen,color: color);
+    min2 = Numbers(screenPosition: Vector2(14, 0), screen: screen,color: color);
 
     var size = screen.calcSpriteSize(18, 7);
 
@@ -49,9 +49,9 @@ class ClockInternal extends DaPixelWidget {
 
     switch (mode) {
       case ClockMode.showSeconds:
-        sep2 = ClockSeparator(screenPosition: Vector2(18, 0), screen: screen);
-        sec1 = Numbers(screenPosition: Vector2(20, 0), screen: screen);
-        sec2 = Numbers(screenPosition: Vector2(24, 0), screen: screen);
+        sep2 = ClockSeparator(screenPosition: Vector2(18, 0), screen: screen,color: color);
+        sec1 = Numbers(screenPosition: Vector2(20, 0), screen: screen,color: color);
+        sec2 = Numbers(screenPosition: Vector2(24, 0), screen: screen,color: color);
 
         size.x = 28;
 
@@ -61,7 +61,7 @@ class ClockInternal extends DaPixelWidget {
         break;
 
       case ClockMode.showAmPm:
-        ampm = ClockAmPm(screenPosition: Vector2(18, 0), screen: screen);
+        ampm = ClockAmPm(screenPosition: Vector2(18, 0), screen: screen,color: color);
         await add(ampm!);
 
         size.x = 27;

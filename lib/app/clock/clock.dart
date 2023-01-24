@@ -9,7 +9,7 @@ import 'clock_internal.dart';
 DaPixelWidget _createBigClock(Screen screen) {
   return BigClockInternal(
       screen: screen,
-      screenPosition: Vector2(2, 0),
+      screenPosition: Vector2(2, 1),
       mode:ClockMode.showAmPm,
       blinkSeparator: true,
       color: const Color(0xffffffff));

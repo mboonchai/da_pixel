@@ -36,23 +36,23 @@ class BigClockInternal extends DaPixelWidget {
     hour1 = Numbers(
         screenPosition: Vector2(0, 0),
         screen: screen,
-        textSize: CharSize.large);
+        textSize: CharSize.large,color: color);
     hour2 = Numbers(
         screenPosition: Vector2(8, 0),
         screen: screen,
-        textSize: CharSize.large);
+        textSize: CharSize.large,color: color);
     sep1 = ClockSeparator(
         screenPosition: Vector2(16, 0),
         screen: screen,
-        textSize: CharSize.large);
+        textSize: CharSize.large,color: color);
     min1 = Numbers(
         screenPosition: Vector2(20, 0),
         screen: screen,
-        textSize: CharSize.large);
+        textSize: CharSize.large,color: color);
     min2 = Numbers(
         screenPosition: Vector2(28, 0),
         screen: screen,
-        textSize: CharSize.large);
+        textSize: CharSize.large,color: color);
 
     var size = screen.calcSpriteSize(36, 14);
 
@@ -67,22 +67,22 @@ class BigClockInternal extends DaPixelWidget {
         sep2 = ClockSeparator(
             screenPosition: Vector2(36, 0),
             screen: screen,
-            textSize: CharSize.large);
+            textSize: CharSize.large,color: color);
         sec1 = Numbers(
             screenPosition: Vector2(40, 0),
             screen: screen,
-            textSize: CharSize.large);
+            textSize: CharSize.large,color: color);
         sec2 = Numbers(
             screenPosition: Vector2(48, 0),
             screen: screen,
-            textSize: CharSize.large);
+            textSize: CharSize.large,color: color);
         size.x = 56;
         await add(sep2!);
         await add(sec1!);
         await add(sec2!);
         break;
       case ClockMode.showAmPm:
-        ampm = ClockAmPm(screenPosition: Vector2(36, 0), screen: screen,textSize:CharSize.large );
+        ampm = ClockAmPm(screenPosition: Vector2(36, 0), screen: screen,textSize:CharSize.large ,color: color);
         await add(ampm!);
 
         size.x = 54;
