@@ -39,9 +39,9 @@ class DaPixel extends FlameGame with PanDetector, DoubleTapDetector {
 
     apps = [
       createClockShowSeconds(viewportSize),
-      createClock(viewportSize),
-      createBigClock(viewportSize),
-      createSimpleCalendar(viewportSize),
+     // createClock(viewportSize),
+     // createBigClock(viewportSize),
+     // createSimpleCalendar(viewportSize),
     ];
 
     camera.viewport = FixedResolutionViewport(_screen.getViewPort());

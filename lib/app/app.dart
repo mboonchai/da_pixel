@@ -38,7 +38,7 @@ abstract class DaPixelApp extends PositionComponent with PixelPositionSupport  {
 
     if(_curDT<0) {
       _curDT =0;
-      _curTick = (_curTick+1)%4;
+      _curTick = (_curTick+1)%8;
       updateApp(_curTick);
       return;
     }
@@ -46,7 +46,7 @@ abstract class DaPixelApp extends PositionComponent with PixelPositionSupport  {
      _curDT += dt;
      if( _curDT > period) {
       _curDT = 0;
-      _curTick = (_curTick+1)%4;
+      _curTick = (_curTick+1)%8;
        updateApp(_curTick);
      }
 
