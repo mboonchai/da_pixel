@@ -10,5 +10,8 @@ Follow instructions here to compile --> https://github.com/ardera/flutter-pi
 
 
 
-https://github.com/mboonchai/da_pixel/assets/1229938/37823611-b8aa-4799-8836-bc04b650cf59
+https://github.com/mboonchai/da_pixel/assets/1229938/32631c99-5938-40a9-963e-a6c3ad11aa4d
+
+
+
 
