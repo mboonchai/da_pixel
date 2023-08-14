@@ -1,16 +1,9 @@
 # da_pixel
 
-A new Flutter project.
+This is a work in progress of a LaMetric TIME clone for Raspberry PI, implemented with Flutter. This project uses [flame engine](https://flame-engine.org/) to emulate pixels on an HDMI display.
 
-## Getting Started
+The display in the sample is 8.8" / 1920x480px.
 
-This project is a starting point for a Flutter application.
+Follow instruction here to compile --> https://github.com/ardera/flutter-pi
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
