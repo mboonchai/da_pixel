@@ -4,10 +4,11 @@ This is a work in progress of a LaMetric TIME clone for Raspberry PI, implemente
 
 The display in the sample is 8.8" / 1920x480px.
 
+Tested with PI4, PI Zero 2 W
+
 Follow instructions here to compile --> https://github.com/ardera/flutter-pi
 
 
 
-
-https://github.com/mboonchai/da_pixel/assets/1229938/61b5ba1b-8446-41c6-8b94-163783e969dd
+https://github.com/mboonchai/da_pixel/assets/1229938/37823611-b8aa-4799-8836-bc04b650cf59
 
