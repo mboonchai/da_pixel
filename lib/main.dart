@@ -27,7 +27,7 @@ class DaPixel extends FlameGame with PanDetector, DoubleTapDetector {
   Future<void> onLoad() async {
     await super.onLoad();
 
-    var viewportSize = Config.useLogicalSize?Config.logicalSize:size;
+    var viewportSize = Config.forceScreenRatio?Config.screenRatio:size;
 
     _screen = Screen(viewportSize,PixelResolution.low);
 
@@ -41,7 +41,7 @@ class DaPixel extends FlameGame with PanDetector, DoubleTapDetector {
       createClockShowSeconds(viewportSize),
      // createClock(viewportSize),
      // createBigClock(viewportSize),
-     // createSimpleCalendar(viewportSize),
+      createSimpleCalendar(viewportSize),
     ];
 
     camera.viewport = FixedResolutionViewport(_screen.getViewPort());

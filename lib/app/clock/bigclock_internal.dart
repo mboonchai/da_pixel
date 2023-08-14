@@ -1,3 +1,4 @@
+import 'package:da_pixel/config.dart';
 import 'package:da_pixel/pixel.dart';
 import 'package:da_pixel/sprites/clock_ampm.dart';
 import 'package:da_pixel/sprites/clock_separator.dart';
@@ -10,6 +11,9 @@ class BigClockInternal extends DaPixelWidget {
   final ClockMode mode;
   final bool blinkSeparator;
   final Color color;
+  
+  final bool enableTransitionAnimation;
+  final double _transitionDuration =  Config.transitionDuration;
 
   late final Numbers hour1;
   late final Numbers hour2;
@@ -25,8 +29,9 @@ class BigClockInternal extends DaPixelWidget {
     this.mode = ClockMode.simple,
     this.blinkSeparator = false,
     this.color = const Color(0xffffffff),
+    this.enableTransitionAnimation = false,
     required super.screen,
-    required super.screenPosition,
+    required super.screenPosition
   });
 
   @override
@@ -36,11 +41,13 @@ class BigClockInternal extends DaPixelWidget {
     hour1 = Numbers(
         screenPosition: Vector2(0, 0),
         screen: screen,
-        textSize: CharSize.large,color: color);
+        textSize: CharSize.large,color: color,
+        transitionStep: 14);
     hour2 = Numbers(
         screenPosition: Vector2(8, 0),
         screen: screen,
-        textSize: CharSize.large,color: color);
+        textSize: CharSize.large,color: color,
+        transitionStep: 14);
     sep1 = ClockSeparator(
         screenPosition: Vector2(16, 0),
         screen: screen,
@@ -48,11 +55,13 @@ class BigClockInternal extends DaPixelWidget {
     min1 = Numbers(
         screenPosition: Vector2(20, 0),
         screen: screen,
-        textSize: CharSize.large,color: color);
+        textSize: CharSize.large,color: color,
+        transitionStep: 14);
     min2 = Numbers(
         screenPosition: Vector2(28, 0),
         screen: screen,
-        textSize: CharSize.large,color: color);
+        textSize: CharSize.large,color: color,
+        transitionStep: 14);
 
     var size = screen.calcSpriteSize(36, 14);
 
@@ -71,11 +80,13 @@ class BigClockInternal extends DaPixelWidget {
         sec1 = Numbers(
             screenPosition: Vector2(40, 0),
             screen: screen,
-            textSize: CharSize.large,color: color);
+            textSize: CharSize.large,color: color,
+            transitionStep: 14);
         sec2 = Numbers(
             screenPosition: Vector2(48, 0),
             screen: screen,
-            textSize: CharSize.large,color: color);
+            textSize: CharSize.large,color: color,
+            transitionStep: 14);
         size.x = 56;
         await add(sep2!);
         await add(sec1!);
@@ -100,6 +111,8 @@ class BigClockInternal extends DaPixelWidget {
   @override
   Future<void> updateApp(int tick) async {
     var now = DateTime.now();
+        var next =
+        now.add(Duration(milliseconds: (_transitionDuration * 1000).floor()));
 
     if (mode == ClockMode.showAmPm) {
       var hourAmPm = now.hour % 12;
@@ -142,5 +155,41 @@ class BigClockInternal extends DaPixelWidget {
         }
       }
     }
+
+ //set next
+    if (enableTransitionAnimation) {
+      if (mode == ClockMode.showAmPm) {
+        var hourAmPm = next.hour % 12;
+
+        if (next.hour == 12 && next.minute == 0) {
+          ampm!.setNext(AmPmState.am);
+          hourAmPm = 12;
+        } else if (next.hour == 24 && next.minute == 0) {
+          ampm!.setNext(AmPmState.pm);
+          hourAmPm = 12;
+        } else {
+          ampm!.setNext(next.hour < 12 ? AmPmState.am : AmPmState.pm);
+        }
+
+        var hour1digit = (hourAmPm / 10).floor();
+
+        hour1.setNext(hour1digit > 0
+            ? NumberState.values[hour1digit]
+            : NumberState.number_notshow);
+        hour2.setNext(NumberState.values[hourAmPm % 10]);
+      } else {
+        hour1.setNext(NumberState.values[(next.hour / 10).floor()]);
+        hour2.setNext(NumberState.values[next.hour % 10]);
+      }
+
+      min1.setNext(NumberState.values[(next.minute / 10).floor()]);
+      min2.setNext(NumberState.values[next.minute % 10]);
+
+      if (mode == ClockMode.showSeconds) {
+        sec1!.setNext(NumberState.values[(next.second / 10).floor()]);
+        sec2!.setNext(NumberState.values[next.second % 10]);
+      }
+    }
+
   }
 }

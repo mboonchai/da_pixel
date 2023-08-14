@@ -27,7 +27,9 @@ class Numbers extends DaPixelSpriteGroupComponent<NumberState> {
     this.textSize = CharSize.small,
     required super.screen,
     required super.screenPosition,
-    super.angle });
+    super.angle,
+    super.transitionStep,
+     });
 
   @override
   Future<void>? onLoad() async {

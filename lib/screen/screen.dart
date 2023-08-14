@@ -5,8 +5,6 @@ import 'dart:core';
 //Screen we use this to manually calculate screen position
 class Screen {
 
-
-
   late double offsetPixelTop; //physical offset
   late double offsetPixelLeft; //physical offset
   late double pixelSize; //physical pixel size
@@ -20,9 +18,8 @@ class Screen {
 
   /// Screen
   /// ratio is Width/Height
-  /// numPixelY is number of logical pixel of Y axis , number of logical pixel of X axis will be = ratio*numPixelY
-  factory Screen(Vector2 screenSize, double numPixelY) {
-
+  /// nRow is number of logical pixel of Y axis , number of logical pixel of X axis will be = ratio*nRow
+  factory Screen(Vector2 screenSize, double nRow) {
  
     //not singleton!
     var instance = Screen._();
@@ -30,47 +27,47 @@ class Screen {
     var w = screenSize.x;
     var h = screenSize.y;
 
-    var numPixelX = Config.ratio * numPixelY;
+    var nCol = screenSize.x/screenSize.y * nRow;
 
     if (!Config.rotateScreen) {
       
-      var useW = (w / numPixelX).floorToDouble() * numPixelX;
-      var useH = (w / numPixelX).floorToDouble() * numPixelY;
+      var useW = (w / nCol).floorToDouble() * nCol;
+      var useH = (w / nCol).floorToDouble() * nRow;
 
 
       instance.offsetPixelLeft = (w - useW) / 2;
       instance.offsetPixelTop = (h - useH) / 2;
 
-      instance.pixelSize = (w / numPixelX).floorToDouble() / (1+Config.gapSize);
+      instance.pixelSize = (w / nCol).floorToDouble() / (1+Config.gapSize);
       instance.pixelGap = instance.pixelSize * Config.gapSize;
 
 
       instance.viewPortW =
-          (w / numPixelX).floorToDouble() * numPixelX - 
+          (w / nCol).floorToDouble() * nCol - 
               instance.pixelGap;
       instance.viewPortH =
-          (w / numPixelX).floorToDouble() * numPixelY -
+          (w / nCol).floorToDouble() * nRow -
               instance.pixelGap;
     } else {
-      var useH = (h / numPixelY).floorToDouble() * numPixelY;
-      var useW = (h / numPixelY).floorToDouble() * numPixelX;
+      var useH = (h / nRow).floorToDouble() * nRow;
+      var useW = (h / nRow).floorToDouble() * nCol;
 
       instance.offsetPixelLeft = (w - useW) / 2;
       instance.offsetPixelTop = (h - useH) / 2;
 
-      instance.pixelSize = (h / numPixelY).floorToDouble() /  (1+Config.gapSize);
+      instance.pixelSize = (h / nRow).floorToDouble() /  (1+Config.gapSize);
       instance.pixelGap = instance.pixelSize * Config.gapSize;
 
       instance.viewPortW =
-          (h / numPixelY).floorToDouble() * numPixelX -
+          (h / nRow).floorToDouble() * nCol -
               instance.pixelGap;
       instance.viewPortH =
-          (h / numPixelY).floorToDouble() * numPixelY -
+          (h / nRow).floorToDouble() * nRow -
               instance.pixelGap;
     }
 
-    instance.width = numPixelX;
-    instance.height = numPixelY;
+    instance.width = nCol;
+    instance.height = nRow;
 
     //if rotate do it here...
     if (Config.rotateScreen) {
@@ -134,34 +131,35 @@ class Screen {
   //sprite size may be real size or reduced size
   Vector2 calcSpriteSize(double width, double height) {
 
-    var netweight = (1 + Config.gapSize)*5;
+    var minPixel = (1 + Config.gapSize)*Config.reducedSpriteCachePixelSize;
 
     return Vector2(
-        Config.cacheResolution <= 0
-            ? (width)
-            : (width * (pixelSize + pixelGap) / netweight),
-        Config.cacheResolution <= 0
-            ? (height)
-            : (height * (pixelSize + pixelGap) / netweight));
+        Config.spriteCacheSize == SpriteCacheSize.reduced
+            ?(width * (pixelSize + pixelGap) / minPixel):
+            (width),
+        Config.spriteCacheSize  == SpriteCacheSize.reduced
+            ? (height * (pixelSize + pixelGap) / minPixel)
+            : (height)
+    );
   }
 
   Vector2 calcSizeFromPixel(double pixelWidth, double pixelHeight) {
-        var netweight = (1 + Config.gapSize)*5;
+        var minPixel = (1 + Config.gapSize)*Config.reducedSpriteCachePixelSize;
 
-    return Vector2(width * (pixelSize + pixelGap) / netweight,
-        height * (pixelSize + pixelGap) / netweight);
+    return Vector2(width * (pixelSize + pixelGap) / minPixel,
+        height * (pixelSize + pixelGap) / minPixel);
   }
 
   double getSpritePixelSize() {
-    return Config.cacheResolution <= 0
-        ? pixelSize
-        : (Config.cacheResolution * 5.0);
+    return Config.spriteCacheSize == SpriteCacheSize.reduced
+        ? Config.reducedSpriteCachePixelSize
+        : pixelSize;
   }
 
   double getSpritePixelGap() {
-    return Config.cacheResolution <= 0
-        ? pixelGap
-        : (Config.cacheResolution * 5.0 * Config.gapSize);
+    return Config.spriteCacheSize == SpriteCacheSize.reduced
+        ? (Config.reducedSpriteCachePixelSize * Config.gapSize)
+        :pixelGap;
   }
 }
 

@@ -22,6 +22,7 @@ DaPixelWidget _createClockWithSeconds(Screen screen) {
         screenPosition: Vector2(7,1),
         mode:ClockMode.showSeconds,
         blinkSeparator: false,
+        enableTransitionAnimation: true,
         color: const Color(0xffffffff));
 }
 

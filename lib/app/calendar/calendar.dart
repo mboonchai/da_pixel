@@ -26,6 +26,7 @@ class SimpleCalendar extends DaPixelApp {
         screenPosition: Vector2(22, 1),
         mode: ClockMode.simple,
         blinkSeparator: true,
+        enableTransitionAnimation: false,
         color: const Color(0xffffffff));
 
     await add(_icon);

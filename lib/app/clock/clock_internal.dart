@@ -12,7 +12,7 @@ class ClockInternal extends DaPixelWidget {
   final bool blinkSeparator;
   final Color color;
 
-  final bool enableTransitionAnimation = true;
+  final bool enableTransitionAnimation;
   final double _transitionDuration =  Config.transitionDuration;
 
   late final Numbers hour1;
@@ -29,6 +29,7 @@ class ClockInternal extends DaPixelWidget {
     this.mode = ClockMode.simple,
     this.blinkSeparator = false,
     this.color = const Color(0xffffffff),
+    this.enableTransitionAnimation = false,
     required super.screen,
     required super.screenPosition,
   });

@@ -57,7 +57,7 @@ abstract class DaPixelSpriteGroupComponent<T> extends PositionComponent
     required this.screen,
     this.sprites,
     this.current,
-    this.transitionStep = 7,
+    this.transitionStep = 7,  //7 for small -- 14 for large
     Paint? paint,
     super.position,
     super.size,
