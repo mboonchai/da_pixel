@@ -5,9 +5,9 @@ import 'package:da_pixel/sprites/clock_separator.dart';
 import 'package:da_pixel/sprites/numbers.dart';
 import 'package:flame/extensions.dart';
 
-import 'clock_base.dart';
+import 'clockmode.dart';
 
-class ClockInternal extends DaPixelWidget {
+class Clock extends DaPixelWidget {
   final ClockMode mode;
   final bool blinkSeparator;
   final Color color;
@@ -25,7 +25,7 @@ class ClockInternal extends DaPixelWidget {
   Numbers? sec2;
   ClockAmPm? ampm;
 
-  ClockInternal({
+  Clock({
     this.mode = ClockMode.simple,
     this.blinkSeparator = false,
     this.color = const Color(0xffffffff),

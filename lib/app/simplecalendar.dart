@@ -1,10 +1,10 @@
 import 'package:da_pixel/app/app.dart';
-import 'package:da_pixel/app/clock/bigclock_internal.dart';
-import 'package:da_pixel/app/clock/clock_base.dart';
 import 'package:da_pixel/screen/screen.dart';
 import 'package:flame/extensions.dart';
 
-import 'calendar_icon.dart';
+import 'widget/calendar/bigcalendar_icon.dart';
+import 'widget/clock/bigclock.dart';
+import 'widget/clock/clockmode.dart';
 
 class SimpleCalendar extends DaPixelApp {
   late final DaPixelWidget _icon;
@@ -21,7 +21,7 @@ class SimpleCalendar extends DaPixelApp {
       screenPosition: Vector2(2,2),
     ); 
     
-    _clock = BigClockInternal(
+    _clock = BigClock(
       screen: screen,
         screenPosition: Vector2(22, 1),
         mode: ClockMode.simple,

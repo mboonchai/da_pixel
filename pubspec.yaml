@@ -38,6 +38,7 @@ dependencies:
   mutex: ^3.0.1
   window_manager: ^0.3.0
   image: ^4.0.10
+  meta: ^1.9.1
 
 dev_dependencies:
   flutter_test:

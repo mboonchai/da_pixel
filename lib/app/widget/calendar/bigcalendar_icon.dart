@@ -22,7 +22,7 @@ class CalendarIconWidget extends DaPixelWidget {
     _frame = CommonSpriteComponent(
       screen: screen,
       screenPosition: Vector2(0, 0),
-      assetName: "calendar_frame.png",
+      assetName: "calendar_frame_big.png",
     );
 
     date1 = Numbers(

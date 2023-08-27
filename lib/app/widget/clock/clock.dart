@@ -1,17 +1,17 @@
+import 'package:da_pixel/app/app.dart';
 import 'package:da_pixel/config.dart';
-import 'package:da_pixel/pixel.dart';
 import 'package:da_pixel/sprites/clock_ampm.dart';
 import 'package:da_pixel/sprites/clock_separator.dart';
 import 'package:da_pixel/sprites/numbers.dart';
 import 'package:flame/extensions.dart';
-import 'package:da_pixel/app/app.dart';
-import 'clock_base.dart';
 
-class BigClockInternal extends DaPixelWidget {
+import 'clockmode.dart';
+
+class Clock extends DaPixelWidget {
   final ClockMode mode;
   final bool blinkSeparator;
   final Color color;
-  
+
   final bool enableTransitionAnimation;
   final double _transitionDuration =  Config.transitionDuration;
 
@@ -20,50 +20,36 @@ class BigClockInternal extends DaPixelWidget {
   late final ClockSeparator sep1;
   late final Numbers min1;
   late final Numbers min2;
-  late ClockSeparator? sep2;
-  late Numbers? sec1;
-  late Numbers? sec2;
+  ClockSeparator? sep2;
+  Numbers? sec1;
+  Numbers? sec2;
   ClockAmPm? ampm;
 
-  BigClockInternal({
+  Clock({
     this.mode = ClockMode.simple,
     this.blinkSeparator = false,
     this.color = const Color(0xffffffff),
     this.enableTransitionAnimation = false,
     required super.screen,
-    required super.screenPosition
+    required super.screenPosition,
   });
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
 
-    hour1 = Numbers(
-        screenPosition: Vector2(0, 0),
-        screen: screen,
-        textSize: CharSize.large,color: color,
-        transitionStep: 14);
-    hour2 = Numbers(
-        screenPosition: Vector2(8, 0),
-        screen: screen,
-        textSize: CharSize.large,color: color,
-        transitionStep: 14);
+    hour1 =
+        Numbers(screenPosition: Vector2(0, 0), screen: screen, color: color);
+    hour2 =
+        Numbers(screenPosition: Vector2(4, 0), screen: screen, color: color);
     sep1 = ClockSeparator(
-        screenPosition: Vector2(16, 0),
-        screen: screen,
-        textSize: CharSize.large,color: color);
-    min1 = Numbers(
-        screenPosition: Vector2(20, 0),
-        screen: screen,
-        textSize: CharSize.large,color: color,
-        transitionStep: 14);
-    min2 = Numbers(
-        screenPosition: Vector2(28, 0),
-        screen: screen,
-        textSize: CharSize.large,color: color,
-        transitionStep: 14);
+        screenPosition: Vector2(8, 0), screen: screen, color: color);
+    min1 =
+        Numbers(screenPosition: Vector2(10, 0), screen: screen, color: color);
+    min2 =
+        Numbers(screenPosition: Vector2(14, 0), screen: screen, color: color);
 
-    var size = screen.calcSpriteSize(36, 14);
+    var size = screen.calcSpriteSize(18, 7);
 
     await add(hour1);
     await add(hour2);
@@ -74,29 +60,25 @@ class BigClockInternal extends DaPixelWidget {
     switch (mode) {
       case ClockMode.showSeconds:
         sep2 = ClockSeparator(
-            screenPosition: Vector2(36, 0),
-            screen: screen,
-            textSize: CharSize.large,color: color);
+            screenPosition: Vector2(18, 0), screen: screen, color: color);
         sec1 = Numbers(
-            screenPosition: Vector2(40, 0),
-            screen: screen,
-            textSize: CharSize.large,color: color,
-            transitionStep: 14);
+            screenPosition: Vector2(20, 0), screen: screen, color: color);
         sec2 = Numbers(
-            screenPosition: Vector2(48, 0),
-            screen: screen,
-            textSize: CharSize.large,color: color,
-            transitionStep: 14);
-        size.x = 56;
+            screenPosition: Vector2(24, 0), screen: screen, color: color);
+
+        size.x = 28;
+
         await add(sep2!);
         await add(sec1!);
         await add(sec2!);
         break;
+
       case ClockMode.showAmPm:
-        ampm = ClockAmPm(screenPosition: Vector2(36, 0), screen: screen,textSize:CharSize.large ,color: color);
+        ampm = ClockAmPm(
+            screenPosition: Vector2(18, 0), screen: screen, color: color);
         await add(ampm!);
 
-        size.x = 54;
+        size.x = 27;
 
         break;
 
@@ -111,7 +93,7 @@ class BigClockInternal extends DaPixelWidget {
   @override
   Future<void> updateApp(int tick) async {
     var now = DateTime.now();
-        var next =
+    var next =
         now.add(Duration(milliseconds: (_transitionDuration * 1000).floor()));
 
     if (mode == ClockMode.showAmPm) {
@@ -156,7 +138,7 @@ class BigClockInternal extends DaPixelWidget {
       }
     }
 
- //set next
+    //set next
     if (enableTransitionAnimation) {
       if (mode == ClockMode.showAmPm) {
         var hourAmPm = next.hour % 12;
@@ -190,6 +172,5 @@ class BigClockInternal extends DaPixelWidget {
         sec2!.setNext(NumberState.values[next.second % 10]);
       }
     }
-
   }
 }
