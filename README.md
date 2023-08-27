@@ -1,12 +1,12 @@
 # da_pixel
 
-This is a work in progress of a LaMetric TIME clone for Raspberry PI, implemented with Flutter. This project uses [flame engine](https://flame-engine.org/) to emulate pixels on an HDMI display.
+This is a work in progress of a pixel-style clock (inspired by LaMetric TIME) for Raspberry PI, implemented with Flutter. This project uses [flame engine](https://flame-engine.org/) to emulate pixels on an HDMI display.
 
 The display in the sample is 8.8" / 1920x480px.
 
 Tested with PI4, PI Zero 2 W
 
-Follow instructions here to compile --> https://github.com/ardera/flutter-pi
+Follow the instructions here to compile --> https://github.com/ardera/flutter-pi
 
 
 
