@@ -1,19 +1,18 @@
 import 'package:da_pixel/app/simplecalendar.dart';
 import 'package:da_pixel/app/simpleclock.dart';
 import 'package:da_pixel/screen/screen.dart';
-import 'package:da_pixel/sprites/background.dart';
+import 'package:flame/camera.dart';
 import 'package:flame/input.dart';
+import 'package:flame/particles.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
-
 import 'app/app.dart';
 import 'config.dart';
-class DaPixel extends FlameGame with PanDetector, DoubleTapDetector {
-  late Background background;
-  // late Numbers char;
-  // late Char char2;
 
-  // Char? char3;
+class DaPixel extends FlameGame with PanDetector, DoubleTapDetector {
+  final world = World();
+  late final CameraComponent _camera;
+
   late Screen _screen;
 
   late List<DaPixelApp> apps;
@@ -27,11 +26,6 @@ class DaPixel extends FlameGame with PanDetector, DoubleTapDetector {
 
     _screen = Screen(viewportSize, PixelResolution.low);
 
-    // //await precache(_screen);
-
-    // char =Numbers(screenPosition: Vector2(0,0));
-    // char2 = Char(characterCode: "2", color: Colors.white, screenPosition: Vector2(0, 7));
-
     apps = [
       createClockShowSeconds(viewportSize),
       createClock(viewportSize),
@@ -40,34 +34,27 @@ class DaPixel extends FlameGame with PanDetector, DoubleTapDetector {
       createCalendarClock(viewportSize)
     ];
 
-    camera.viewport = FixedResolutionViewport(_screen.getViewPort());
+    
+    _camera =   CameraComponent.withFixedResolution(width: viewportSize.x, height: viewportSize.y,world: world);
+    _camera.viewfinder.anchor = Anchor.topLeft;
 
-    background = Background(position: Vector2(0, 0), screen: _screen);
-
-    // //player = Player();
-    //add(background);
 
     for (var app in apps) {
       await app.precache(_screen);
     }
 
     if (apps.isNotEmpty) {
-      add(apps[0]);
+      world.add(apps[0]);
       curApp = 0;
     }
 
-    //add(char);
-    //add(char2);
+    addAll([world,_camera]);
+
   }
 
   @override
   void onPanUpdate(DragUpdateInfo info) {
-    //char.move(info.delta.game);
-    // char2.move(info.delta.game);
 
-    // if (char3 != null) {
-    //   char3!.move(info.delta.game);
-    // }
   }
 
   @override
@@ -77,21 +64,12 @@ class DaPixel extends FlameGame with PanDetector, DoubleTapDetector {
     var newApp = (curApp + 1) % apps.length;
 
     if (newApp != curApp) {
-      remove(apps[curApp]);
-      add(apps[newApp]);
+      world.remove(apps[curApp]);
+      world.add(apps[newApp]);
 
       curApp = newApp;
     }
 
-    // if (char3 != null) {
-    //   return;
-    // }
-
-    // char3 = Char(
-    //     characterCode: "1", color: Colors.white, screenPosition: Vector2(4, 0));
-    // add(char3!);
-
-    // char.current = NumberState.number_5;
   }
 
   @override
