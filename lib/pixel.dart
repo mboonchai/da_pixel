@@ -163,11 +163,11 @@ Future<PixelLoadResult> loadAlphaNum(Screen screen, String code,
 //ALWAYS LOADED WITH LANDSCAPE SIDE
 Future<PixelLoadResult> loadBackground(Screen screen,
     {Color color = Colors.white}) async {
-  var h = Config.rotateScreen ? screen.viewPortW : screen.viewPortH;
-  var w = Config.rotateScreen ? screen.viewPortH : screen.viewPortW;
+  var h = screen.viewPortH;
+  var w = screen.viewPortW;
 
-  var pxh = Config.rotateScreen ? screen.width : screen.height;
-  var pxw = Config.rotateScreen ? screen.height : screen.width;
+  var pxh = screen.height;
+  var pxw = screen.width;
 
   final pictureRecorder = PictureRecorder();
 

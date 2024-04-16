@@ -28,8 +28,6 @@ class Screen {
     var h = screenSize.y;
 
     var nCol = screenSize.x/screenSize.y * nRow;
-
-    if (!Config.rotateScreen) {
       
       var useW = (w / nCol).floorToDouble() * nCol;
       var useH = (w / nCol).floorToDouble() * nRow;
@@ -48,43 +46,12 @@ class Screen {
       instance.viewPortH =
           (w / nCol).floorToDouble() * nRow -
               instance.pixelGap;
-    } else {
-      var useH = (h / nRow).floorToDouble() * nRow;
-      var useW = (h / nRow).floorToDouble() * nCol;
-
-      instance.offsetPixelLeft = (w - useW) / 2;
-      instance.offsetPixelTop = (h - useH) / 2;
-
-      instance.pixelSize = (h / nRow).floorToDouble() /  (1+Config.gapSize);
-      instance.pixelGap = instance.pixelSize * Config.gapSize;
-
-      instance.viewPortW =
-          (h / nRow).floorToDouble() * nCol -
-              instance.pixelGap;
-      instance.viewPortH =
-          (h / nRow).floorToDouble() * nRow -
-              instance.pixelGap;
-    }
+   
 
     instance.width = nCol;
     instance.height = nRow;
 
-    //if rotate do it here...
-    if (Config.rotateScreen) {
-      var tmp = 0.0;
 
-      tmp = instance.offsetPixelLeft;
-      instance.offsetPixelLeft = instance.offsetPixelTop;
-      instance.offsetPixelTop = tmp;
-
-      tmp = instance.viewPortW;
-      instance.viewPortW = instance.viewPortH;
-      instance.viewPortH = tmp;
-
-      tmp = instance.width;
-      instance.width = instance.height;
-      instance.height = tmp;
-    }
 
 
     return instance;
@@ -95,16 +62,13 @@ class Screen {
   Vector2 getViewPort() {
     return Vector2(viewPortW, viewPortH);
   }
+  
 
   //x,y is logical/screen (top,left)
   Vector2 getPosition(int x, int y) {
     return Vector2(
-      Config.rotateScreen
-          ? (viewPortW - (y * (pixelSize + pixelGap)))
-          : (x * (pixelSize + pixelGap)),
-      Config.rotateScreen
-          ? ((x * (pixelSize + pixelGap)))
-          : (y * (pixelSize + pixelGap)),
+    (x * (pixelSize + pixelGap)),
+    (y * (pixelSize + pixelGap)),
     );
   }
 
@@ -119,12 +83,8 @@ class Screen {
   //use with positioncomponent only
   Vector2 getPositionFromScreenWithRotate(Vector2 pos) {
     return Vector2(
-      Config.rotateScreen
-          ? (viewPortW - (pos.y * (pixelSize + pixelGap)))
-          : (pos.x * (pixelSize + pixelGap)),
-      Config.rotateScreen
-          ? ((pos.x * (pixelSize + pixelGap)))
-          : (pos.y * (pixelSize + pixelGap)),
+          (pos.x * (pixelSize + pixelGap)),
+          (pos.y * (pixelSize + pixelGap)),
     );
   }
 

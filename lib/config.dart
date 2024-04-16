@@ -6,7 +6,7 @@ class Config {
     //[1920 x 480]
     // pixel: 40 x 10,  64 x 16
     // size: 40(dot)+8(gap) ~ 5:1,  25(dot) + 5(gap) ~ 5:1
-    static bool rotateScreen = false;  //for now, only support --> rotate 90 degree clock wise 
+    static int rotate = 0; //0, 90, 180, 270
 
     static bool forceScreenRatio = true; //if not force --> use windows size
     static Vector2 screenRatio = Vector2(1920,480);

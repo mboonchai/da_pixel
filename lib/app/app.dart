@@ -1,7 +1,4 @@
 import 'dart:async';
-import 'dart:math';
-
-import 'package:da_pixel/config.dart';
 import 'package:da_pixel/screen/pixel_position_support.dart';
 import 'package:da_pixel/screen/screen.dart';
 import 'package:da_pixel/sprites/background.dart';
@@ -28,10 +25,6 @@ abstract class DaPixelApp extends PositionComponent with PixelPositionSupport {
     await super.onLoad();
 
     position = calcPositionFromScreenWithRotate(screen, Vector2(0, 0));
-
-    if (Config.rotateScreen) {
-      angle = pi / 2;
-    }
 
     await add(Background(screen: screen, position: Vector2(0, 0)));
 

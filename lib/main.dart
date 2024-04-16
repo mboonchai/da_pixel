@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
 import 'app/app.dart';
 import 'config.dart';
+import 'dart:math';
 
 class DaPixel extends FlameGame with PanDetector, DoubleTapDetector {
   final world = World();
@@ -23,8 +24,8 @@ class DaPixel extends FlameGame with PanDetector, DoubleTapDetector {
     await super.onLoad();
 
     var viewportSize = Config.forceScreenRatio ? Config.screenRatio : size;
-
     _screen = Screen(viewportSize, PixelResolution.low);
+    _camera = createCamera(world, viewportSize);
 
     apps = [
       createClockShowSeconds(viewportSize),
@@ -33,10 +34,6 @@ class DaPixel extends FlameGame with PanDetector, DoubleTapDetector {
       createBigCalendarClock(viewportSize),
       createCalendarClock(viewportSize)
     ];
-
-    
-    _camera =   CameraComponent.withFixedResolution(width: viewportSize.x, height: viewportSize.y,world: world);
-    _camera.viewfinder.anchor = Anchor.topLeft;
 
 
     for (var app in apps) {
@@ -77,6 +74,33 @@ class DaPixel extends FlameGame with PanDetector, DoubleTapDetector {
   void update(double dt) {
     super.update(dt);
   }
+}
+
+CameraComponent createCamera(World world, Vector2 viewportSize) {
+  CameraComponent camera;
+
+   if(Config.rotate == 180) {
+    camera = CameraComponent.withFixedResolution(width: viewportSize.x, height: viewportSize.y,world: world);
+    camera.viewfinder.anchor = Anchor.topLeft;
+    camera.viewfinder.angle = -pi;
+    camera.viewfinder.position = Vector2(viewportSize.x,viewportSize.y);
+
+  } else if(Config.rotate == 90){  
+    camera = CameraComponent.withFixedResolution(width: viewportSize.y, height: viewportSize.x,world: world);
+    camera.viewfinder.anchor = Anchor.topLeft;
+    camera.viewfinder.angle = -pi/2;
+    camera.viewfinder.position = Vector2(0,viewportSize.y);
+  }else if(Config.rotate == 270){  
+    camera = CameraComponent.withFixedResolution(width: viewportSize.y, height: viewportSize.x,world: world);
+    camera.viewfinder.anchor = Anchor.topLeft;
+    camera.viewfinder.angle = pi/2;
+    camera.viewfinder.position = Vector2(viewportSize.x,0);
+  } else {
+    camera =   CameraComponent.withFixedResolution(width: viewportSize.x, height: viewportSize.y,world: world);
+    camera.viewfinder.anchor = Anchor.topLeft;
+  }
+
+  return camera;
 }
 
 // Future<void> precache(Screen screen) async {
