@@ -4,19 +4,20 @@ import 'package:da_pixel/sprites/numbers.dart';
 import 'package:da_pixel/sprites/sprite.dart';
 import 'package:flame/extensions.dart';
 
-class BigCalendarIconWidget extends DaPixelWidget {
+class CalendarIconWidget extends DaPixelWidget {
   int _curDay = 0;
   late final DaPixelSpriteComponent _frame;
   late final Numbers date1;
   late final Numbers date2;
 
-  BigCalendarIconWidget({
+  CalendarIconWidget({
     required super.screen,
   });
 
+
   @override
   Vector2 screenSize() {
-    return Vector2(11, 12);
+    return Vector2(9, 8);
   }
 
   @override
@@ -26,19 +27,19 @@ class BigCalendarIconWidget extends DaPixelWidget {
     _frame = CommonSpriteComponent(
       screen: screen,
       screenPosition: Vector2(0, 0),
-      assetName: "calendar_frame_big.png",
+      assetName: "calendar_frame_small.png",
     );
 
     date1 = Numbers(
       color: const Color(0xFF000000),
       screen: screen,
-      screenPosition: Vector2(2, 4),
+      screenPosition: Vector2(1, 1),
     );
     
     date2 = Numbers(
       color: const Color(0xFF000000),
       screen: screen,
-      screenPosition: Vector2(6, 4),
+      screenPosition: Vector2(5, 1),
     );
 
 
@@ -47,6 +48,7 @@ class BigCalendarIconWidget extends DaPixelWidget {
     await add(date2);
     date1.current = NumberState.number_notshow;
     date2.current = NumberState.number_notshow;
+
 
   }
 

@@ -31,8 +31,18 @@ class Clock extends DaPixelWidget {
     this.color = const Color(0xffffffff),
     this.enableTransitionAnimation = false,
     required super.screen,
-    required super.screenPosition,
   });
+
+  @override
+  Vector2 screenSize() {
+    if (mode == ClockMode.showSeconds) {
+      return Vector2(28, 7);
+    } else if (mode == ClockMode.showAmPm) {
+      return Vector2(27, 7);
+    } else {
+      return Vector2(18, 7);
+    }
+  }
 
   @override
   Future<void> onLoad() async {
@@ -49,8 +59,6 @@ class Clock extends DaPixelWidget {
     min2 =
         Numbers(screenPosition: Vector2(14, 0), screen: screen, color: color);
 
-    var size = screen.calcSpriteSize(18, 7);
-
     await add(hour1);
     await add(hour2);
     await add(sep1);
@@ -66,8 +74,6 @@ class Clock extends DaPixelWidget {
         sec2 = Numbers(
             screenPosition: Vector2(24, 0), screen: screen, color: color);
 
-        size.x = 28;
-
         await add(sep2!);
         await add(sec1!);
         await add(sec2!);
@@ -78,16 +84,12 @@ class Clock extends DaPixelWidget {
             screenPosition: Vector2(18, 0), screen: screen, color: color);
         await add(ampm!);
 
-        size.x = 27;
-
         break;
 
       default:
         break;
     }
 
-    width = size.x;
-    height = size.y;
   }
 
   @override

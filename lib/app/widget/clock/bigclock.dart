@@ -31,8 +31,16 @@ class BigClock extends DaPixelWidget {
     this.color = const Color(0xffffffff),
     this.enableTransitionAnimation = false,
     required super.screen,
-    required super.screenPosition
   });
+
+  @override
+  Vector2 screenSize() {
+    if(mode==ClockMode.showSeconds) {
+      return Vector2(56, 14);
+    } else {
+      return Vector2(36, 14);
+    }
+  }
 
   @override
   Future<void> onLoad() async {
@@ -63,8 +71,6 @@ class BigClock extends DaPixelWidget {
         textSize: CharSize.large,color: color,
         transitionStep: 14);
 
-    var size = screen.calcSpriteSize(36, 14);
-
     await add(hour1);
     await add(hour2);
     await add(sep1);
@@ -87,7 +93,7 @@ class BigClock extends DaPixelWidget {
             screen: screen,
             textSize: CharSize.large,color: color,
             transitionStep: 14);
-        size.x = 56;
+
         await add(sep2!);
         await add(sec1!);
         await add(sec2!);
@@ -96,7 +102,6 @@ class BigClock extends DaPixelWidget {
         ampm = ClockAmPm(screenPosition: Vector2(36, 0), screen: screen,textSize:CharSize.large ,color: color);
         await add(ampm!);
 
-        size.x = 54;
 
         break;
 
@@ -104,8 +109,6 @@ class BigClock extends DaPixelWidget {
         break;
     }
 
-    width = size.x;
-    height = size.y;
   }
 
   @override

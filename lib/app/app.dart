@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:da_pixel/config.dart';
@@ -9,25 +10,41 @@ import 'package:flutter/widgets.dart';
 
 abstract class DaPixelApp extends PositionComponent with PixelPositionSupport {
   final Screen screen;
-  final Vector2 screenPosition;
   final double period; //period that will actually updated
+  late final WidgetPlacer? placer;
+  late final List<DaPixelWidget> widgets;
+
   double _curDT = -0.01; //last update pass
   int _curTick = 0; //internal usage --> count period circle 0,1,2,3
 
   DaPixelApp(
-      {required this.screenPosition, required this.screen, this.period = 0.5});
+      {required this.screen,
+      required this.widgets,
+      this.placer,
+      this.period = 0.5});
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
 
-    position = calcPositionFromScreenWithRotate(screen, screenPosition);
+    position = calcPositionFromScreenWithRotate(screen, Vector2(0, 0));
 
     if (Config.rotateScreen) {
       angle = pi / 2;
     }
 
     await add(Background(screen: screen, position: Vector2(0, 0)));
+
+    var screenSize = Vector2(screen.width, screen.height);
+    for (var i = 0; i < widgets.length; i++) {
+      var widget = widgets[i];
+
+      if (placer != null) {
+        placer!.setPosition(i, screenSize, widget);
+      }
+
+      await add(widget);
+    }
   }
 
   @override
@@ -50,9 +67,15 @@ abstract class DaPixelApp extends PositionComponent with PixelPositionSupport {
     }
   }
 
-  Future<void> updateApp(int tick);
+  Future<void> updateApp(int tick) async {
+    for (var widget in widgets) {
+      await widget.updateApp(tick);
+    }
+  }
 
-  Future<void> precache(Screen screen) async{ return Future.value();}
+  Future<void> precache(Screen screen) async {
+    return Future.value();
+  }
 }
 
 abstract class Updatable {
@@ -62,18 +85,30 @@ abstract class Updatable {
 abstract class DaPixelWidget extends PositionComponent
     with PixelPositionSupport
     implements Updatable {
-  final Vector2 screenPosition;
+  Vector2 screenPosition = Vector2.zero();
   final Screen screen;
 
-  DaPixelWidget({required this.screenPosition, required this.screen});
+  DaPixelWidget({required this.screen});
+  DaPixelWidget.withScreenPosition(
+      {required this.screen, required this.screenPosition});
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-
     position = calcPositionFromScreen(screen, screenPosition);
+
+    var size = screen.calcSpriteSizeFromVector2(screenSize());
+    width = size.x;
+    height = size.y;
   }
 
-  Future<void> precache(Screen screen) async{ return Future.value();}
+  Vector2 screenSize();
 
+  Future<void> precache(Screen screen) async {
+    return Future.value();
+  }
+}
+
+abstract class WidgetPlacer {
+  void setPosition(int index, Vector2 screenSize, DaPixelWidget widget);
 }

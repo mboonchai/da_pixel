@@ -128,6 +128,10 @@ class Screen {
     );
   }
 
+  Vector2 calcSpriteSizeFromVector2(Vector2 screenSize) {
+    return calcSpriteSize(screenSize.x, screenSize.y);
+  }
+
   //sprite size may be real size or reduced size
   Vector2 calcSpriteSize(double width, double height) {
 
