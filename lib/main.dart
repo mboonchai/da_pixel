@@ -2,6 +2,7 @@ import 'package:da_pixel/app/simplecalendar.dart';
 import 'package:da_pixel/app/simpleclock.dart';
 import 'package:da_pixel/screen/screen.dart';
 import 'package:flame/camera.dart';
+import 'package:flame/events.dart';
 import 'package:flame/input.dart';
 import 'package:flame/particles.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'config.dart';
 import 'dart:math';
 
 class DaPixel extends FlameGame with PanDetector, DoubleTapDetector {
+  @override
   final world = World();
   late final CameraComponent _camera;
 

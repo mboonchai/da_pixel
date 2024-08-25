@@ -5,7 +5,6 @@ import 'package:da_pixel/pixels/alphanum_l.dart';
 import 'package:da_pixel/screen/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'config.dart';
 import 'pixels/alphanum_s.dart';
 import 'pixels_loader/base.dart';
 import 'package:image/image.dart' as img;
