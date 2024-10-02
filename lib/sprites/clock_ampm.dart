@@ -1,4 +1,4 @@
-import 'package:da_pixel/pixel.dart';
+import 'package:da_pixel/pixels/pixel.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 

@@ -1,8 +1,8 @@
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:da_pixel/config.dart';
-import 'package:da_pixel/pixel.dart';
-import 'package:da_pixel/pixels_loader/base.dart';
+import 'package:da_pixel/pixels/pixel.dart';
 import 'package:da_pixel/screen/pixel_position_support.dart';
 import 'package:da_pixel/screen/screen.dart';
 import 'package:da_pixel/sprites_cache/cache.dart';
@@ -46,6 +46,7 @@ abstract class DaPixelSpriteGroupComponent<T> extends PositionComponent
   int _stepMilliseconds = 0;
   bool _drawAnimation = false;
   int _curStep = 0;
+  int _nextStep = 0;
 
   Map<T, Sprite>? sprites;
 
@@ -57,7 +58,7 @@ abstract class DaPixelSpriteGroupComponent<T> extends PositionComponent
     required this.screen,
     this.sprites,
     this.current,
-    this.transitionStep = 7,  //7 for small -- 14 for large
+    this.transitionStep = 7, //7 for small -- 14 for large
     Paint? paint,
     super.position,
     super.size,
@@ -106,7 +107,10 @@ abstract class DaPixelSpriteGroupComponent<T> extends PositionComponent
 
       sprites?[_next]?.render(
         canvas,
-        position: Vector2(0, (screen.pixelSize + screen.pixelGap) * (transitionStep-(_curStep))),
+        position: Vector2(
+            0,
+            (screen.pixelSize + screen.pixelGap) *
+                (transitionStep - (_curStep))),
         size: size,
         overridePaint: paint,
       );
@@ -121,10 +125,9 @@ abstract class DaPixelSpriteGroupComponent<T> extends PositionComponent
   }
 
   void setNext(T next) {
-    if(_next == next) {
+    if (_next == next) {
       return;
     }
-
 
     _next = next;
     if (_next != current) {
@@ -141,15 +144,22 @@ abstract class DaPixelSpriteGroupComponent<T> extends PositionComponent
     if (startTransitionDt
         .add(Duration(milliseconds: (_transitionDuration * 1000).floor()))
         .isAfter(now)) {
-      _curStep = ((now.millisecondsSinceEpoch -
+      _nextStep = ((now.millisecondsSinceEpoch -
                   startTransitionDt.millisecondsSinceEpoch) /
               _stepMilliseconds)
           .floor();
 
+      if (_nextStep != _curStep) {
+        _curStep = _nextStep;
+       _drawAnimation = true;
+      } else {
+        _drawAnimation = false;
+      }
+
+      //TODO: Findout why number suddenly change without animation
+      //log("_curStep $_curStep");
 
       _drawAnimation = true;
-
-
     } else {
       _drawAnimation = false;
       _next = current;

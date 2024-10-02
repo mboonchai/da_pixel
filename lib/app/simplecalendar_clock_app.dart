@@ -10,13 +10,13 @@ import 'widget/clock/clock.dart';
 import 'widget/clock/clockmode.dart';
 
 
-class SimpleCalendar extends DaPixelApp {
+class SimpleCalendarClockApp extends DaPixelApp {
 
-  SimpleCalendar.
+  SimpleCalendarClockApp.
   _({required super.screen, required super.widgets,super.placer});
 
-  factory SimpleCalendar.big(Screen screen) {
-    return SimpleCalendar._(
+  factory SimpleCalendarClockApp.big(Screen screen) {
+    return SimpleCalendarClockApp._(
         screen: screen,
         placer: IconWithMainPlacer(padding: 2),
         widgets: [
@@ -33,8 +33,8 @@ class SimpleCalendar extends DaPixelApp {
         );
   }
 
-  factory SimpleCalendar.normal(Screen screen) {
-    return SimpleCalendar._(
+  factory SimpleCalendarClockApp.normal(Screen screen) {
+    return SimpleCalendarClockApp._(
         screen: screen,
         placer: IconWithMainPlacer(padding: 2),
         widgets: [
@@ -67,12 +67,12 @@ class SimpleCalendar extends DaPixelApp {
 }
 
 DaPixelApp createBigCalendarClock(Vector2 screenSize) {
-  return SimpleCalendar.big(createHighResScreen(screenSize));
+  return SimpleCalendarClockApp.big(createHighResScreen(screenSize));
   
 }
 
 DaPixelApp createCalendarClock(Vector2 screenSize) {
-  return SimpleCalendar.normal(
+  return SimpleCalendarClockApp.normal(
     createLowResScreen(screenSize),
   );
 }

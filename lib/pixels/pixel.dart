@@ -5,8 +5,7 @@ import 'package:da_pixel/pixels/alphanum_l.dart';
 import 'package:da_pixel/screen/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'pixels/alphanum_s.dart';
-import 'pixels_loader/base.dart';
+import 'alphanum_s.dart';
 import 'package:image/image.dart' as img;
 
 enum CharSize {
@@ -273,4 +272,11 @@ Future<PixelLoadResult> loadPixelizedImageFromAssets(
 class PixelLoadResult {
   bool success = false;
   PixelData? data;
+}
+
+
+class PixelData {
+  Uint8List? data;
+  int width = 0;
+  int height = 0;
 }

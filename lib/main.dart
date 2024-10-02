@@ -1,5 +1,5 @@
-import 'package:da_pixel/app/simplecalendar.dart';
-import 'package:da_pixel/app/simpleclock.dart';
+import 'package:da_pixel/app/simplecalendar_clock_app.dart';
+import 'package:da_pixel/app/simpleclock_app.dart';
 import 'package:da_pixel/screen/screen.dart';
 import 'package:flame/camera.dart';
 import 'package:flame/events.dart';

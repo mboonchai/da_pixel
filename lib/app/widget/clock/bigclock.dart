@@ -1,5 +1,5 @@
 import 'package:da_pixel/config.dart';
-import 'package:da_pixel/pixel.dart';
+import 'package:da_pixel/pixels/pixel.dart';
 import 'package:da_pixel/sprites/clock_ampm.dart';
 import 'package:da_pixel/sprites/clock_separator.dart';
 import 'package:da_pixel/sprites/numbers.dart';

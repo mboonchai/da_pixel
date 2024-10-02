@@ -1,4 +1,4 @@
-import 'package:da_pixel/pixels_loader/base.dart';
+import 'package:da_pixel/pixels/pixel.dart';
 
 import 'base.dart';
 

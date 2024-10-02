@@ -9,6 +9,7 @@ class BigCalendarIconWidget extends DaPixelWidget {
   late final DaPixelSpriteComponent _frame;
   late final Numbers date1;
   late final Numbers date2;
+  late final Numbers dateOneDigit;
 
   BigCalendarIconWidget({
     required super.screen,
@@ -34,43 +35,51 @@ class BigCalendarIconWidget extends DaPixelWidget {
       screen: screen,
       screenPosition: Vector2(2, 4),
     );
-    
+
     date2 = Numbers(
       color: const Color(0xFF000000),
       screen: screen,
       screenPosition: Vector2(6, 4),
     );
 
+    dateOneDigit = Numbers(
+      color: const Color(0xFF000000),
+      screen: screen,
+      screenPosition: Vector2(4, 4),
+    );
 
     await add(_frame);
     await add(date1);
     await add(date2);
+    await add(dateOneDigit);
     date1.current = NumberState.number_notshow;
     date2.current = NumberState.number_notshow;
-
+    dateOneDigit.current = NumberState.number_notshow;
   }
 
   @override
   Future<void> updateApp(int tick) async {
-    if(tick!=1) {
+    if (tick != 1) {
       return;
     }
 
     var day = DateTime.now().day;
-     if (_curDay == day) {
-       return;
-     }
+    if (_curDay == day) {
+      return;
+    }
 
     _curDay = day;
 
-
-
     if (_curDay < 10) {
       date1.current = NumberState.number_notshow;
+      date2.current = NumberState.number_notshow;
+      dateOneDigit.current = NumberState.values[_curDay];
     } else {
-       date1.current = NumberState.values[(_curDay / 10).floor()];
+      date1.current = NumberState.values[(_curDay / 10).floor()];
+      date2.current = NumberState.values[_curDay % 10];
+      dateOneDigit.current = NumberState.number_notshow;
     }
 
-    date2.current = NumberState.values[_curDay % 10];
+    
   }
 }
