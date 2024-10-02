@@ -57,6 +57,15 @@ class Screen {
     return instance;
   }
 
+  factory Screen.lowRes( Vector2 screenSize) {
+    return Screen(screenSize, PixelResolution.low);
+  }
+
+  factory Screen.highRes(Vector2 screenSize) {
+    return Screen(screenSize, PixelResolution.high);
+  }
+
+
   Screen._();
 
   Vector2 getViewPort() {
@@ -125,12 +134,4 @@ class Screen {
         ? (Config.reducedSpriteCachePixelSize * Config.gapSize)
         :pixelGap;
   }
-}
-
-Screen createLowResScreen(Vector2 screenSize) {
-  return Screen(screenSize, PixelResolution.low);
-}
-
-Screen createHighResScreen(Vector2 screenSize) {
-  return Screen(screenSize, PixelResolution.high);
 }

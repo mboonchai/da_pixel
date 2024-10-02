@@ -16,7 +16,10 @@ class SimpleClockApp extends DaPixelApp {
     required super.placer,
   });
 
-  factory SimpleClockApp.basic(Screen screen) {
+  factory SimpleClockApp.basic(Vector2 screenSize) {
+
+    final screen = Screen.lowRes(screenSize);
+
     return SimpleClockApp._(
         screen: screen,
         placer: CenterPlacer(),
@@ -30,7 +33,10 @@ class SimpleClockApp extends DaPixelApp {
         ]);
   }
 
-   factory SimpleClockApp.withSeconds(Screen screen) {
+   factory SimpleClockApp.withSeconds(Vector2 screenSize) {
+
+    final screen = Screen.lowRes(screenSize);
+
     return SimpleClockApp._(
         screen: screen,
         placer: CenterPlacer(),
@@ -44,7 +50,10 @@ class SimpleClockApp extends DaPixelApp {
         ]);
   }
 
-  factory SimpleClockApp.big(Screen screen) {
+  factory SimpleClockApp.big(Vector2 screenSize) {
+
+    final screen = Screen.highRes(screenSize);
+
     return SimpleClockApp._(
         screen: screen,
         placer: CenterPlacer(),
@@ -69,16 +78,3 @@ class SimpleClockApp extends DaPixelApp {
   }
 }
 
-
-
-DaPixelApp createClockShowSeconds(Vector2 screenSize) {
-  return SimpleClockApp.withSeconds(createLowResScreen(screenSize));
-}
-
-DaPixelApp createClock(Vector2 screenSize) {
-  return SimpleClockApp.basic(createLowResScreen(screenSize));
-}
-
-DaPixelApp createBigClock(Vector2 screenSize) {
-  return SimpleClockApp.big(createHighResScreen(screenSize));
-}

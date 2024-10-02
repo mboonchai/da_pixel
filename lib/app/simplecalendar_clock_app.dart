@@ -15,7 +15,10 @@ class SimpleCalendarClockApp extends DaPixelApp {
   SimpleCalendarClockApp.
   _({required super.screen, required super.widgets,super.placer});
 
-  factory SimpleCalendarClockApp.big(Screen screen) {
+  factory SimpleCalendarClockApp.big(Vector2 screenSize) {
+
+    final screen = Screen.highRes(screenSize);
+
     return SimpleCalendarClockApp._(
         screen: screen,
         placer: IconWithMainPlacer(padding: 2),
@@ -33,7 +36,10 @@ class SimpleCalendarClockApp extends DaPixelApp {
         );
   }
 
-  factory SimpleCalendarClockApp.normal(Screen screen) {
+  factory SimpleCalendarClockApp.normal(Vector2 screenSize) {
+
+    final screen = Screen.lowRes(screenSize);
+
     return SimpleCalendarClockApp._(
         screen: screen,
         placer: IconWithMainPlacer(padding: 2),
@@ -64,15 +70,4 @@ class SimpleCalendarClockApp extends DaPixelApp {
   Future<void> updateApp(int tick) async {
     return await super.updateApp(tick);
   }
-}
-
-DaPixelApp createBigCalendarClock(Vector2 screenSize) {
-  return SimpleCalendarClockApp.big(createHighResScreen(screenSize));
-  
-}
-
-DaPixelApp createCalendarClock(Vector2 screenSize) {
-  return SimpleCalendarClockApp.normal(
-    createLowResScreen(screenSize),
-  );
 }
