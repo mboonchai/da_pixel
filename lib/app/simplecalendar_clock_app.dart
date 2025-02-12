@@ -3,8 +3,8 @@ import 'package:da_pixel/app/placer.dart';
 import 'package:da_pixel/screen/screen.dart';
 import 'package:flame/extensions.dart';
 
-import 'widget/calendar/bigcalendar_icon.dart';
-import 'widget/calendar/calendar_icon.dart';
+import 'widget/calendar_icon/bigcalendar.dart';
+import 'widget/calendar_icon/calendar.dart';
 import 'widget/clock/bigclock.dart';
 import 'widget/clock/clock.dart';
 import 'widget/clock/clockmode.dart';

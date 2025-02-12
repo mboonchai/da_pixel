@@ -9,6 +9,10 @@ class BasicHorizontalPlacer implements WidgetPlacer {
 
   BasicHorizontalPlacer({this.padding = 2});
 
+  factory BasicHorizontalPlacer.withPadding(int padding) {
+    return BasicHorizontalPlacer(padding: padding);
+  }
+
   @override
   void setPosition(int index, Vector2 screenSize, DaPixelWidget widget) {
     var pos = Vector2.zero();

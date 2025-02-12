@@ -5,7 +5,7 @@ import 'package:da_pixel/sprites/background.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/widgets.dart';
 
-abstract class DaPixelApp extends PositionComponent with PixelPositionSupport {
+abstract class DaPixelApp extends PositionComponent with PixelPositionSupport  {
   final Screen screen;
   final double period; //period that will actually updated
   late final WidgetPlacer? placer;

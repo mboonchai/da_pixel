@@ -1,5 +1,7 @@
+import 'package:da_pixel/app/defaultapp.dart';
+import 'package:da_pixel/app/placer.dart';
 import 'package:da_pixel/app/simplecalendar_clock_app.dart';
-import 'package:da_pixel/app/simpleclock_app.dart';
+import 'package:da_pixel/app/widget/dayofweek/dayofweek.dart';
 import 'package:da_pixel/screen/screen.dart';
 import 'package:flame/camera.dart';
 import 'package:flame/events.dart';
@@ -26,15 +28,22 @@ class DaPixel extends FlameGame with PanDetector, DoubleTapDetector {
     await super.onLoad();
 
     var viewportSize = Config.forceScreenRatio ? Config.screenRatio : size;
-    _screen = Screen(viewportSize, PixelResolution.low);
+    _screen = Screen.highRes(viewportSize);
     _camera = createCamera(world, viewportSize);
 
     apps = [
-      SimpleClockApp.withSeconds(viewportSize),
-      SimpleClockApp.basic(viewportSize),
-      SimpleClockApp.big(viewportSize),
-      SimpleCalendarClockApp.big(viewportSize),
-      SimpleCalendarClockApp.normal(viewportSize)
+      // SimpleClockApp.withSeconds(viewportSize),
+      // SimpleClockApp.basic(viewportSize),
+      // SimpleClockApp.big(viewportSize),
+       SimpleCalendarClockApp.big(viewportSize),
+      // SimpleCalendarClockApp.normal(viewportSize)
+      // DefaultApp(
+      //   screen: Screen.highRes(viewportSize), 
+      //   widgets: [
+      //     DayOfWeekWidget(screen: _screen)
+      //   ],
+      //   placer: BasicHorizontalPlacer.withPadding(2)
+      // )
     ];
 
 
